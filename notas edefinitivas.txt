@@ -1,0 +1,294 @@
+Programación Orientada a Objetos
+
+Se trata de instanciar clases. Generar métodos para llevar a cabo una función.
+
+¿Por qué usar POO?
+
+Php es un lenguaje de programación estructurado con extensiones de orientación a objetos.En php una función declarada en una página php podrá ser declarada inmediatamente después a su declaración.
+
+Como primera aproximación, uno podria plantearse programar en cada archivo php todas las funciones necesarias que vayan a usarse
+en el documento. En proyectos grandes esto supone un alto costo de mantenimiento debido a la complejidad  de seguimiento de código
+y a la duplicación del mismo código en distintas páginas, en caso de querer aplicar una mejora en una función, en caso de detectarse
+un error y el codigo que lo conecta deberán revisarse todos los scripts php para comprobar si contiene la función que hay que
+corregir.
+
+PHP permite definir clases, que poseen variables (también llamadas propiedades) y metodos (también llamadas funciones)
+
+<?php
+class Matematicas
+	//Declaracion de las variables internas
+	$error="";
+
+	//Funciones
+
+	//Sumar los valores
+
+	function suma($valor1, $valor2) {
+		if(is:numeric_($valor1)) && if(is:numeric_($valor2)) ||{
+			$this->error""; 
+			return $valor1 + $valor2;
+		}
+		else{
+			$this->error"un valor no es numerico";
+			return "NaN"; 
+	}
+	
+	//Restar los valores
+
+	function resta($valor1, $valor2) {
+		if(is:numeric_($valor1)) && if(is:numeric_($valor2)) ||{
+			$this->error""; 
+			return $valor1 - $valor2;
+		}
+		else{
+			$this->error"un valor no es numerico";
+			return "NaN"; 
+	}
+
+	function obtener_error(){
+		return $error;
+	}
+}
+?>
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Las clases permiten organizar mejor el codigo, ampliar nuestra productividad y eficiencia mediante la reutilización de
+código, la multiplicidad y la versatilidad 
+
+Organización del código
+
+En php oo cada clase se programa dentro de un unico fichero.
+Posteriormente a la creación del fichero (documento) con la definición de la clase, pueden crearse instancias de la clase llamadas objetos
+
+<?php
+class Texto
+	//Declaracion de las variables internas
+	public $cadena="";
+
+	//Funciones
+	//Obtener el valor inicial de la cadena
+	function entrar_cadena($variable) {
+		$this->cadena = $variable;
+	}
+
+	//Elimina los espacios existentes al inicio y fin de la cadena
+	function limpiar_espacios() {
+		return trim($this->cadena);
+	}
+
+      //Se inserta una cadena de caracteres delante o detras de la cadena o trabajar
+	function insertar_delante ($textoDelante) {
+		$this->cadena = $textoDelante . $this->$cadena;
+	}
+
+	function insertar_detras ($textoDetras) {
+		$this->cadena = $this->$cadena . $textoDetras;
+	}
+
+	//Escapa los caracteres especiales para evitar errores en SQL
+	function preparar_SQL() {
+		return addlashes ($this->$cadena);
+	}
+
+	//Escribe en formato HTML los caracteres especiales, tales como los acentos
+	function preparar_HTML() {
+		return htmlspecialchars($this->cadena);
+	}
+
+	function mostrar_cadena() {
+		return $this->cadena;
+	}
+}
+
+
+<?php
+	require_once("texto_clase.php"); //incorporacion del fichero texto_clase.php para poder hacer uso de las clases declaradas en el
+
+	$cadena = new Texto(); //creacion de un objeto ($cadena) de la clase Texto
+	$cadena->entrar_cadena($_POST['usuario']); //uso de una funcion de la clase Texto
+	$cadnea->limpiar_espacios();
+
+	echo "Se ha seleccionado el usuario $cadena->preparar_HTML()";
+	
+	//Preparamos la consulta SQL para validar el usuario
+	$cadena->insertar_delante("SELECT nombre_completo FROM usuarios WHERE login='");
+	$cadena->insertar_detras("'");
+	
+	$sql = $cadena->preparar_SQL();
+?>
+
+REUTILIZACIÓN  DE CÓDIGO
+
+La creación de un portal dinámico en php (pag o servicio web) suele componerse de páginas de presentación, formularios, 
+obtención de información existente dentro de bases de datos, tratamientos de datos, obtener desde formularios, portales externos.
+Hay funcionalidades comunes a la mayoría de los proyectos, como la validación de variables o el acceso a bases de datos, por lo que el 
+programador tiende a reutilizar código implementado en proyectos anteriores, por lo que incrementa así su eficiencia y evita posibles 
+errores de programación.
+Estamos acostumbrados a reutilizar código de terceras personas, como por ejemplo la API de php con funciones tales como: 
+"require", "echo", "MySql".
+
+MULTIPLICIDAD
+
+Como ya hemos detallado, una clase es un -PROTOTIPO- que define variables y funciones que pueden realizarse sobre estas variables, 
+UNA VEZ DEFINIDA UNA CLASE, PODEMOS INSTANCIAR TANTOS OBJETOS DE LA CLASE COMO SEAN NECESARIOS, TENIENDO TODOS 
+ELLOS LAS CARACTERÍSTICAS DE LA CLASE, ES DECIR, SUS VARIABLES Y FUNCIONES.
+
+entendimiento del concepto
+
+Dentro de una aplicación web en la que se debe hacer un transpaso de dinero entre dos cuentas, existe una cuenta a la que se hará un 
+ingreso de dinero (cuenta de destino B) que proviene de una cuenta a la que se le deberá sustraer dicho saldo (cuenta de origen A). 
+Un traspaso de un saldo supone una consulta de saldo en la cuenta origen y una actualización en la misma cuenta para restar el saldo que 
+se va a transpasar. Por parte del beficiado, implica una consulta de saldo actual para poder realizar una actualuzación que lo incremente 
+con el transpaso.
+
+PREGUNTA: Desarrollar el código necesario e implementación del sistema de información con POO que me permita realizar ls acciones 
+planteadas. implementar una BD
+
+HERENCIA
+
+Modificadores y herencia de clases
+Los modificadores definen las restricciones de acceso a propiedades y métodos, y la herencia de estos es posible dependiendo del 
+modificador.
+Las clases, propiedades y métodos se definen mediante los modificadores public, protected, private, final o abstract seguido de una 
+declaración de variable normal:
+1. Public: La propiedad o método podrá usarse en cualquier parte del Script.
+2. Private: La propiedad o método solo podrá usarse en la clase a la que pertenece
+3. Protected: La propiedad o método se podrá usar por la clase a la que pertenece y por sus descendientes 
+4. Final: La clase o método no puede ser sobreescrito en clases descendientes
+5. Abstract: La clase o métodono puede ser usado directamente ha de ser heredado primero para usarse.
+
+Primero es necesario saber qué es la herencia de clases. Una clase puede heredar los métodos y propiedades de otra clase usando la 
+palabra extends. No es posible extender a múltiples clases. Solo se puede heredar de una clase, los métodos y propiedades heredados 
+pueden ser sobreescritos declarándolos de nuevo con el mismo nombre que tiene en la clase padre
+
+class Perro
+{
+	public $nombre = "Rudolf";
+	public function ladrar(){
+		print "Guau!";
+	}
+}
+class Bulldog extends Perro{
+	public function ladrar(){
+		print "Woof!";
+	}
+}
+$cachorro = new Bulldog(); //instancia de la clase hija
+$cachorro->nombre = "Jeffrey"; // Heredamos la propiedad padre $nombre y la asignamos a Jeffry
+echo $cachorro->nombre; //devuelve Jeffry
+$cachorro->ladrar(); // Devuelve woof! ya que ha sobreescrito la funcion padre ladrar()
+
+
+1)Public: -LAS PROPIEDADES Y MÉTODOS PUBLICSON ACCESIBLES DESDE CUALQUIER PARTE DEL SCRIPT, SIENDO ESTE MODIFICADOR EL 
+MÁS FACIL DE USAR-. en php4 las variables se declaraban con la palabra reservada "var", -Y ERAN PUBLIC-, pero esa forma de 
+denominarlas está obsoleta y puede generar algunos warning
+
+class Perro
+{
+	public $nombre;
+	public function ladrar(){
+		print "Guau!";
+	}
+}
+class Bulldog extends Perro{
+	public function ladrar(){
+		print "Woof!";
+	}
+}
+$cachorro = new Bulldog();
+$cachorro->nombre = "BunBuns";
+print $cachorro->nombre; //devuelve: BunBuns
+
+Poe defecto TODAS las propiedades y funciones son public, no es necesario especificar "Public", pero es mejor hacerlo para que sea más 
+legible. Con los métodos puedes no utilizar ninguna palabra y escribir directamente "Function". Con las propiedades en cambio necesitas 
+una palabra por lo menos, sino daría un error de sintáxis, ya que si no hay manera de saber qué propiedades tiene una clase. Nunca hay 
+que usar "var".
+
+2)Private: el proble a de las propiedades y métodos "Public" es que se permite llamar a los métodosy establecer las propiedades desde 
+cualquier lado del script. En el ejemplo anterior si en lugar de crear un objeto Bulldog, creamos un objeto Perro e intentamos establecer 
+$nombre nos dará un fatal error. -CAN NOT ACCESS PRIVATE PROPIERTY-.
+
+class Perro
+{
+	private $nombre;
+	private function ladrar(){
+		print "Guau!";
+	}
+}
+$cachorro = new Perro();
+$cachorro->nombre = "BunBuns"; //Fatal error
+
+No se podrá ni mostrar ni modificar. Para hacerlo se utiliza getters, setters, y methods public para poder acceder a estas propiedades y 
+métodos private desde otras partes del script
+
+class Perro
+{
+	private $nombre;
+	public function ladrar(){
+		print "Guau!";
+	}
+	public function setNombre($nombre){
+	this->nombre = $nombre;
+	}
+	public function getNombe(){
+	return $this->nombre;
+	}
+}
+$cachorro = new Perro();
+$cachorro->setNombre = ("Chicken");
+echo $cachorro->getNombre();
+
+3)Protected: Las propiedades y métodos marcados como protected son accesibles a través de la clase donde se crean y sus 
+descendientes
+
+class Perro
+{
+	protected $nombre;
+	protected function ladrar(){
+		print "Guau!";
+	}
+}
+class Bulldog extends Perro{
+	public function ladrarNulldog(){
+		//Podemos acceder a ladrar() de la clase Perro
+		return $this->ladrar();
+	}
+	public function setNombre($nombre){
+	this->nombre = $nombre;
+	}
+	public function getNombe(){
+	return $this->nombre;
+	}
+}
+
+4)Final: La palabra "final" se utiliza para declarar que un método o clase no puede ser sobreescrito por una clase hija
+
+Class Perro
+{
+	public $nombre;
+	final public function ladrar();
+	}
+}
+class Bulldog extends Perro{
+	//dará error:
+	public function ladrar()
+	{
+		print "Woof!";
+	}
+}
+$cachorro = new Bulldog();
+$cachorro->ladrar(); //Cannot override final method
+
+5)Abstract: el modificador "Abstract" indica que una clase o método no puede instansiarser y sólo puede heredarse, transladando su
+funcionamiento obligatorio a las clases hija.
+
+TRABAJO: 
+Realizar un CRUD (HOTEL) en php con POO con las siguientes condiciones:
+-Usar framework Bootstrap
+-Las hojas de estilos no deben de tener más de 10 líneas
+-Definir un archivo llamado functions para settear y gettear de los distintos métodos
+-Definir un archivo para mis clases
+-Realizar la programación con herencia
+-Hacer uso de base de datos MySql
